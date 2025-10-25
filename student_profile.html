@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-container, .profile-container {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .hidden-view {
+            display: none;
+            opacity: 0;
+        }
+        .visible-view {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-lg">
+
+        <!-- Registration Form View -->
+        <div id="registration-view" class="form-container visible-view">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Create Your Account
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Please fill in your details to register
+                </p>
+            </div>
+            <form id="student-form" class="mt-8 space-y-6" novalidate>
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="name" class="sr-only">Name</label>
+                        <input id="name" name="name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Full Name">
+                    </div>
+                    <div>
+                        <label for="register-id" class="sr-only">Register ID</label>
+                        <input id="register-id" name="register-id" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Register ID">
+                    </div>
+                    <div>
+                        <label for="email" class="sr-only">Email address</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+                        <p id="email-error" class="text-red-500 text-xs mt-1 ml-1 hidden">Please enter a valid email address.</p>
+                    </div>
+                    <div>
+                        <label for="mobile" class="sr-only">Mobile Number</label>
+                        <input id="mobile" name="mobile" type="tel" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mobile Number">
+                        <p id="mobile-error" class="text-red-500 text-xs mt-1 ml-1 hidden">Must be 10 digits.</p>
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+                        <p id="password-error" class="text-red-500 text-xs mt-1 ml-1 hidden">Password must be at least 8 characters long.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <button id="submit-btn" type="submit" disabled class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Profile Info View -->
+        <div id="profile-view" class="profile-container hidden-view">
+             <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Profile Information
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Your registered details are below.
+                </p>
+            </div>
+            <div id="profile-details" class="mt-8 space-y-4">
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <p class="text-sm font-medium text-gray-500">Name</p>
+                    <p id="profile-name" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <p class="text-sm font-medium text-gray-500">Register ID</p>
+                    <p id="profile-register-id" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+                 <div class="p-3 bg-gray-50 rounded-md">
+                    <p class="text-sm font-medium text-gray-500">Email</p>
+                    <p id="profile-email" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+                 <div class="p-3 bg-gray-50 rounded-md">
+                    <p class="text-sm font-medium text-gray-500">Mobile Number</p>
+                    <p id="profile-mobile" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+            </div>
+             <div class="mt-6">
+                <button id="edit-btn" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Edit Profile
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- This is the BROWSER/FRONTEND script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'http://localhost:3000';
+    
+            const form = document.getElementById('student-form');
+            const inputs = form.querySelectorAll('input');
+            const submitBtn = document.getElementById('submit-btn');
+            const registrationView = document.getElementById('registration-view');
+            const profileView = document.getElementById('profile-view');
+            const editBtn = document.getElementById('edit-btn');
+            const emailError = document.getElementById('email-error');
+            const mobileError = document.getElementById('mobile-error');
+            const passwordError = document.getElementById('password-error');
+            const profileName = document.getElementById('profile-name');
+            const profileRegisterId = document.getElementById('profile-register-id');
+            const profileEmail = document.getElementById('profile-email');
+            const profileMobile = document.getElementById('profile-mobile');
+            
+            let currentStudentData = {};
+            let isEditMode = false;
+    
+            const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+            const validateMobile = (mobile) => /^\d{10}$/.test(String(mobile));
+            const validatePassword = (password) => password.length >= 8;
+    
+            const checkFormCompleteness = () => {
+                let allFilled = true;
+                inputs.forEach(input => {
+                    if (input.value.trim() === '' && !(isEditMode && input.id === 'password')) {
+                        allFilled = false;
+                    }
+                });
+                if(document.getElementById('register-id').value.trim() === '') {
+                    allFilled = false;
+                }
+                submitBtn.disabled = !allFilled;
+            };
+    
+            const showView = (viewToShow) => {
+                [registrationView, profileView].forEach(view => {
+                    view.classList.toggle('hidden-view', view.id !== viewToShow);
+                    view.classList.toggle('visible-view', view.id === viewToShow);
+                });
+            };
+    
+            inputs.forEach(input => input.addEventListener('input', checkFormCompleteness));
+    
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                emailError.classList.add('hidden');
+                mobileError.classList.add('hidden');
+                passwordError.classList.add('hidden');
+    
+                let isValid = true;
+                const name = document.getElementById('name').value;
+                const registerId = document.getElementById('register-id').value;
+                const email = document.getElementById('email').value;
+                const mobile = document.getElementById('mobile').value;
+                const password = document.getElementById('password').value;
+    
+                if (!validateEmail(email)) { isValid = false; emailError.classList.remove('hidden'); }
+                if (!validateMobile(mobile)) { isValid = false; mobileError.classList.remove('hidden'); }
+                if (password && !validatePassword(password)) { isValid = false; passwordError.classList.remove('hidden'); }
+                if (!isEditMode && !validatePassword(password)) { isValid = false; passwordError.classList.remove('hidden'); }
+    
+                if (isValid) {
+                    const studentData = { name, email, mobile };
+                    if (password) studentData.password = password;
+                    if (!isEditMode) studentData.registerId = registerId;
+    
+                    try {
+                        let response;
+                        if (isEditMode) {
+                            // This is the "waiter" sending an UPDATE order to the "kitchen"
+                            response = await fetch(`${API_URL}/student/${currentStudentData.registerId}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(studentData),
+                            });
+                        } else {
+                            // This is the "waiter" sending a NEW order to the "kitchen"
+                            response = await fetch(`${API_URL}/student`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(studentData),
+                            });
+                        }
+    
+                        const result = await response.json();
+    
+                        if (!response.ok) {
+                            alert(`Error: ${result.message}`);
+                            return;
+                        }
+                        
+                        alert(result.message);
+                        
+                        currentStudentData = { ...currentStudentData, ...studentData, registerId: currentStudentData.registerId || registerId };
+                        
+                        profileName.textContent = currentStudentData.name;
+                        profileRegisterId.textContent = currentStudentData.registerId;
+                        profileEmail.textContent = currentStudentData.email;
+                        profileMobile.textContent = currentStudentData.mobile;
+                        
+                        showView('profile-view');
+                        isEditMode = false;
+                        form.reset();
+                        document.getElementById('register-id').disabled = false;
+                        document.querySelector('#registration-view h2').textContent = 'Create Your Account';
+                        submitBtn.textContent = 'Submit';
+                        
+                    } catch (error) {
+                        console.error('Failed to communicate with the server:', error);
+                        alert('Could not connect to the server. Is it running?');
+                    }
+                }
+            });
+    
+            editBtn.addEventListener('click', () => {
+                isEditMode = true;
+                document.getElementById('name').value = currentStudentData.name;
+                document.getElementById('register-id').value = currentStudentData.registerId;
+                document.getElementById('email').value = currentStudentData.email;
+                document.getElementById('mobile').value = currentStudentData.mobile;
+                document.getElementById('password').value = ''; 
+                
+                document.getElementById('register-id').disabled = true;
+    
+                document.querySelector('#registration-view h2').textContent = 'Update Your Profile';
+                submitBtn.textContent = 'Update';
+                checkFormCompleteness();
+                showView('registration-view');
+            });
+        });
+    </script>
+</body>
+</html>
+
